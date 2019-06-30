@@ -1,6 +1,6 @@
 import searchPageStore from '../store/search-page-store';
 import searchPageSource from '../source/search-result-page-source';
-import searchUtils from '../../../../utility/search-utility';
+import searchUtils from '../../../utility/search-utility';
 import $ from 'jquery';
 import getCardDom from '../../../components/card/elements/card';
 class SearchResult{
