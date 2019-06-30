@@ -5,13 +5,16 @@ class SearchPageStore{
     }
 
     updateState(data){
-        //TODO
+        //TODO: Add Data and increment the offset
+        debugger;
     }
 
-    resetState(){
-        this.searchQuery = undefined;
+    resetState(request = {}){
+        let { searchQuery } = request;
+        this.searchQuery = searchQuery;
         this.searchData = [];
         this.offset = 0;
+        this.request = request;
     }
 
 }

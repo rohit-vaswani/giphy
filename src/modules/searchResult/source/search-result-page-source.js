@@ -2,12 +2,13 @@ import searchPageApiRegistry from '../api-registry/search-page-api-registry';
 
 class SearchPageSource{
 
-    fetchSearchResult(request){
+    fetchSearchResult(request = {}){
 
         const { searchQuery , limit = 25 , rating = 'G' , language = 'en' , offset = 0 } = request;
-
+        const apiKey = '';//process.env.API_KEY;
+        const apiName = 'search';
         const options = {
-            api_key: process.env.API_KEY,
+            api_key: apiKey,
             q: searchQuery,
             lang: language,
             limit,
