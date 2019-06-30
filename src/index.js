@@ -1,6 +1,7 @@
-import searchBar from './modules/search/elements/search'
+import searchBar from './modules/searchBar/elements/search-bar'
 import searchPage from './modules/searchResult/elements/search-result-page';
 import trending from './modules/trending/elements/trending';
+import getLoader from './components/loader/elements/loader'
 import $ from 'jquery';
 
 class App{
@@ -19,9 +20,12 @@ class App{
         let searchBarDom = searchBar.render();
         let searchPageDom = searchPage.render();
         let trendingDom = trending.render();
+        let loaderDom = getLoader();
+        
         this.appendToDom(searchBarDom)
             .appendToDom(trendingDom)
             .appendToDom(searchPageDom)
+            .appendToDom(loaderDom);
     }
 }
 

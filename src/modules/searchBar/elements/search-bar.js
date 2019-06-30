@@ -6,6 +6,10 @@ class Search{
     constructor(){
         this.bodyDom = $('body');
         this.checkForEnter = this.checkForEnter.bind(this);
+        this.performSearch = this.performSearch.bind(this);
+        this.searchButtonSel = '#search-button';
+        this.searchInputSel = '#search-box';
+        this.registerEvents();
     }
 
     getSearchRequest(){
@@ -25,22 +29,23 @@ class Search{
         searchResultPage.onSearchRequest(req);
     }
 
-    onClear(){
-        
+    resetSearch(req){
+        searchResultPage.resetSearchPage(req);
     }
 
     registerEvents(){
-        this.bodyDom.on('keyup', this.checkForEnter);
+        this.bodyDom.on('keyup', this.searchInputSel , this.checkForEnter);
+        this.bodyDom.on('click' , this.searchButtonSel , this.performSearch);
     }
 
     render(){
 
         return(
         `<div class="fixbar">
-            <input id="search-box" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" value="hey">
-            <a class="_3LNjsTExcGj7xdqSxGseQI search-button__Container-ndudpy-1 grSXnc">
-                    <div class="search-button__GradientBox-ndudpy-2 imTUlS"></div>
-                    <div class="search-button__SearchIcon-ndudpy-0 lkAkJi">
+            <input id="search-box" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" value="GO-JEK">
+            <a id="search-button" class="search-button-container">
+                    <div class="search-button-GradientBox"></div>
+                    <div class="search-button-icon">
                         <img src="./pub/search-icon.svg" width="">
                     </div>
             </a>
@@ -50,8 +55,4 @@ class Search{
     }
 
 }
-
-let search = new Search();
-search.registerEvents();//TODO_SEARCH
-
-export default search;
+export default new Search();

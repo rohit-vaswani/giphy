@@ -1,9 +1,5 @@
-class Image{
-    constructor(){
-
-    }
-
-    render(props){
-
-    }
+export default function getImage(url , alt){
+    return (
+        `<img src="${url}" alt="${alt}" />`
+    );
 }
