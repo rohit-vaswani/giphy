@@ -9,7 +9,7 @@
     "dev": "run-p watch start",
     "start": "http-server",
     "bundle": "webpack",
-    "make": ". make.sh",
+    "make": "npm run clean && npm i && npm run bundle && npm run start",
     "clean": "rm -rf node_modules"
   },
   "keywords": [],
