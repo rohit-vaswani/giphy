@@ -9,44 +9,56 @@ class SearchResult{
         this.bodyDom = $('body'); 
         this.totalLanes = 3;
         this.fetchSearchResultSuccess = this.fetchSearchResultSuccess.bind(this);
+        this.onScrolledToBottom = this.onScrolledToBottom.debounce(1500).bind(this);
         this.resetSearchPageSelector = '.search-result-page';
         this.loaderSel = '.search-loader';
+        this.registerEvents();
+    }
+
+    registerEvents(){
+        let that = this;
+        window.onscroll = function(event) {
+            let isBottomReached = (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
+            isBottomReached && that.onScrolledToBottom(event);
+        };
+    }
+
+    onScrolledToBottom(){
+        console.log('Scrolled to bottom\n');
+        this.fetchSearchResult();
     }
 
     constructRequest(){
-        let { request } = searchPageStore;
-        return request;
+        let { request , offset } = searchPageStore;
+        return Object.assign({}, request, {offset});
     }
 
     fetchSearchResult(){
         let req = this.constructRequest();
+        console.log('Search API Request : ' , req);
         return searchPageSource.fetchSearchResult(req)
             .then(this.fetchSearchResultSuccess, this.fetchSearchResultFailure);
     }
     
     fetchSearchResultSuccess(response){
         this.loader(false);
-        console.log('Response : ' , response);//TODO_SEARCH
+        console.log('Search API Response : ' , response);
         searchPageStore.updateState(response);
         searchUtils.isSearchResultEmpty(response) ? this.renderNoResult(response) : this.renderList(response);
         this.renderSummary(response);
-        searchPageStore.incLastLane( response.data , this.totalLanes );
+        searchPageStore.incLastLane( response.data.length , this.totalLanes );
     }
 
     fetchSearchResultFailure(){
         this.loader(false);
     }
 
-    onScroll(){
-
-    }
-
     renderNoResult(){
-
+        //To show `No result` found for the `searchQuery`
     }
 
     renderSummary(){
-
+        //TODO: To show `total_count` of `pagination` of Search API response
     }
 
     resetContainer(){

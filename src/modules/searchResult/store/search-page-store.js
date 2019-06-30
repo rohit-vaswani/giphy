@@ -18,9 +18,9 @@ class SearchPageStore{
 
     updateState(response){
         let { data , pagination } = response;
-        let { offset = 0 } = pagination;
+        let { offset = 0 , count = 0 } = pagination;
         this.searchData = this.searchData.concat(data);
-        this.offset = offset;
+        this.offset = offset + count;
     }
 
     resetState(request = {}){

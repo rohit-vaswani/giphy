@@ -1,3 +1,4 @@
+import './core/prototype-methods';
 import searchBar from './modules/searchBar/elements/search-bar'
 import searchPage from './modules/searchResult/elements/search-result-page';
 import trending from './modules/trending/elements/trending';
@@ -21,7 +22,7 @@ class App{
         let searchPageDom = searchPage.render();
         let trendingDom = trending.render();
         let loaderDom = getLoader();
-        
+
         this.appendToDom(searchBarDom)
             .appendToDom(trendingDom)
             .appendToDom(searchPageDom)
