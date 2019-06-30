@@ -1,11 +1,12 @@
 .fixbar {
-    margin: 10px 10px;
-    width: 97%;
+    width: 104%;
     height: 30px;
     position: fixed;
     z-index: 1;
     display: flex;
     flex-wrap: wrap;
+    top: 0px;
+    left: 0px;
 }
 #search {
     position: absolute;
@@ -71,3 +72,54 @@
     display: flex;
 }
 
+
+
+
+/* Image container */
+
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+
+body{
+	background: #eee;
+}
+
+.wrapper{
+	width:80%;
+	height:auto;
+	margin: 60px auto;
+	display: flex;
+}
+
+.lane{
+	display: flex;
+	flex-direction: column;
+}
+
+.img-wrap{
+	position: relative;
+	overflow: hidden;
+	margin:5px 5px 5px;
+	border-radius: 5px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in;
+}
+
+.img-wrap img{
+	width:100%;
+    display: inherit;
+}
+
+.img-info span{
+	color:#fff;
+}
+
+@media only screen and (max-width: 480px){
+	.wrapper{
+		display: block;
+		width:100%;
+	}
+}

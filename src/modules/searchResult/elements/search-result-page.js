@@ -7,6 +7,8 @@ class SearchResult{
 
     constructor(){
         this.bodyDom = $('body'); 
+        this.totalLanes = 3;
+        this.fetchSearchResultSuccess = this.fetchSearchResultSuccess.bind(this);
     }
 
     constructRequest(){
@@ -20,21 +22,16 @@ class SearchResult{
             .then(this.fetchSearchResultSuccess, this.fetchSearchResultFailure);
     }
     
-    fetchSearchResultSuccess(response){
-
-        debugger;
-        console.log(response);
-        if(searchUtils.isSearchResultEmpty(response)){
-            return;
-        }
-
-        this.renderList();
+    fetchSearchResultSuccess(response){        
+        console.log('Response : ' , response);
         searchPageStore.updateState(response);
-
+        searchUtils.isSearchResultEmpty(response) ? this.renderNoResult(response) : this.renderList(response);
+        this.renderSummary(response);
+        searchPageStore.incLastLane( response.data , this.totalLanes );
     }
 
     fetchSearchResultFailure(){
-
+        
     }
 
     onScroll(){
@@ -49,8 +46,15 @@ class SearchResult{
 
     }
 
-    renderCards(){
-
+    getCardDom(card = {}, imageType , defaultImageType){
+        let { images } = card;
+        let imageObj = images[imageType] || images[defaultImageType] || {};
+        const { url } = imageObj;
+        return (
+            `<div class="img-wrap">
+                <img src="${url}" alt="img1" />
+            </div>`
+        )
     }
 
     resetContainer(){
@@ -67,14 +71,26 @@ class SearchResult{
         this.resetContainer();
     }
 
-    renderList(){
-
+    renderList(response = {}){
+        let { data = [] } = response;
+        let { selImageType : imageType , lastLane , defaultImageType } = searchPageStore;
+        data.forEach( (card , index) => {
+            let laneNo = (lastLane+index+1)%(this.totalLanes);
+            let cardDom = this.getCardDom(card , imageType , defaultImageType);
+            $(`#lane-${laneNo}`).append(cardDom);
+        });
     }
 
-    render(){
+    getLanesWrapper(){
+        const lanes = [...Array(this.totalLanes)];
+        return lanes.map( (_ , ind) => `<div id="lane-${ind}" class="lane"></div>`).join(' ');
+    }
+
+    render(){        
         return(
-            `
-                Search Result Page Dom
+            `<div class='wrapper'>
+                ${this.getLanesWrapper()}
+            </div>
             `
         )
     }

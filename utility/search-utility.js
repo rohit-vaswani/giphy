@@ -1,8 +1,7 @@
 class SearchUtility{
 
-    isSearchResultEmpty(data){
-        //TODO
-        return false;
+    isSearchResultEmpty(res = {}){
+        return !res.data.length;
     }
 
 

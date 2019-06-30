@@ -5,9 +5,9 @@ class SearchPageSource{
     fetchSearchResult(request = {}){
 
         const { searchQuery , limit = 25 , rating = 'G' , language = 'en' , offset = 0 } = request;
-        const apiKey = '';//process.env.API_KEY;
+        const apiKey = '8kglFvxMyOYqhUEEja1S4A4sP3juxyoe'; //process.env.API_KEY;//TODO_SEARCH
         const apiName = 'search';
-        const options = {
+        const queryParams = {
             api_key: apiKey,
             q: searchQuery,
             lang: language,
@@ -16,8 +16,9 @@ class SearchPageSource{
             offset
         }
 
-        let url = searchPageApiRegistry.getPath(apiName , options);
-        return fetch(url);
+        let url = searchPageApiRegistry.getPath(apiName , {queryParams});
+        return fetch(url , {method: 'GET'})
+            .then( res => res.json());
         
     }
 
